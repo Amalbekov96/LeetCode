@@ -8,7 +8,7 @@ pipeline {
     environment {
         // Define the SonarQube server configuration
         SONARQUBE_HOME = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-        SONARQUBE_SERVER_URL = 'http://localhost:9090' // Replace with your SonarQube server URL
+        SONARQUBE_SERVER_URL = 'http://localhost:9000' // Replace with your SonarQube server URL
         SONARQUBE_TOKEN = credentials('sqa_f9d0750bc8a3340b1717acaaca950ba9ef4ba755') // Use the SonarQube authentication token from Jenkins credentials
     }
 
