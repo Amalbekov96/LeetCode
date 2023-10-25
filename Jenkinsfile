@@ -1,12 +1,23 @@
-
 pipeline {
+    tools {
+        maven 'Maven'
+    }
     agent any
-
     stages {
-        stage('Hello') {
+        stage("build") {
             steps {
-                echo 'Hello World'
+                echo "Building "
             }
         }
-    }
+        stage("test") {
+            steps {
+                echo "Testing "
+            }
+        }
+        stage("deploy") {
+            steps {
+                echo "Deploying "
+            }
+        }
+    }   
 }
