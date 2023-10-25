@@ -4,6 +4,15 @@ pipeline {
     tools {
         maven 'Maven3'
     }
+
+    environment {
+        // Define the SonarQube server configuration
+        SONARQUBE_HOME = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
+        SONARQUBE_SERVER_URL = 'http://localhost:9090' // Replace with your SonarQube server URL
+        SONARQUBE_TOKEN = credentials('sqa_f9d0750bc8a3340b1717acaaca950ba9ef4ba755') // Use the SonarQube authentication token from Jenkins credentials
+    }
+
+    
     stages {
         stage('Build') {
             steps {
@@ -18,11 +27,11 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
+        stage('Run SonarQube Analysis') {
             steps {
-                // Run SonarQube analysis on your code. Replace with your SonarQube configuration.
-                withSonarQubeEnv('SonarQubeServer') {
-                    sh 'mvn sonar:sonar' // Assuming Maven and SonarScanner plugin.
+                script {
+                    // Run the SonarQube analysis
+                    sh "${SONARQUBE_HOME}/bin/sonar-scanner -Dsonar.host.url=${SONARQUBE_SERVER_URL} -Dsonar.login=${SONARQUBE_TOKEN}"
                 }
             }
         }
