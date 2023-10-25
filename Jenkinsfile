@@ -3,6 +3,7 @@ pipeline {
 
     tools {
         maven 'Maven3'
+        git 'a7f1b491-1fb1-415b-a307-efa2d5b49c0a'
     }
 
     environment {
