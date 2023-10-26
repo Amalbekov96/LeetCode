@@ -32,7 +32,7 @@ pipeline {
         stage('Run SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube-10.2.1') {
-                    sh 'mvm sonar:sonar'
+                    sh 'mvn sonar:sonar'
                 }
             }
         }
