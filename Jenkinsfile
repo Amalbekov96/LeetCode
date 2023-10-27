@@ -39,8 +39,7 @@ pipeline {
 
         stage('Deploy to Tomcat') {
             steps {
-                // Deploy the built application to a local Tomcat server.
-                echo 'Deploying'
+                deploy adapters: [tomcat9(credentialsId: '91750011-363b-4a0f-85a5-740f2e550efd', path: '', url: 'http://localhost:9090/')], contextPath: '/LeetCode-1.0-SNAPSHOT', war: '*/*.war'
             }
         }
     }
