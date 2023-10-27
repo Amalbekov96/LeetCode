@@ -23,8 +23,15 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'mvn test'  // Use appropriate Maven goals or build commands
-                jacoco(execPattern: 'target/jacoco.exec')
                 echo 'Testing'
+            }
+        }
+
+        stage('Run SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube-10.2.1') {
+                    sh 'mvn sonar:sonar'
+                }
             }
         }
 
@@ -43,14 +50,6 @@ pipeline {
                             }
                         }
                     }
-                }
-            }
-        }
-
-        stage('Run SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('sonarqube-10.2.1') {
-                    sh 'mvn sonar:sonar'
                 }
             }
         }
