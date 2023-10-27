@@ -32,6 +32,22 @@ pipeline {
             }
         }
 
+        stage("Quality Gate") {
+            steps {
+                timeout(time: 5, unit: 'MINUTES') {
+                    script {
+                        def qualityGateStatus = waitForQualityGate()
+
+                        if (qualityGateStatus != 'OK') {
+                            error "Quality Gate failed: ${qualityGateStatus}"
+                        } else {
+                            echo 'Quality Gate passed'
+                        }
+                    }
+                }
+            }
+        }
+
         stage('Run SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('sonarqube-10.2.1') {
@@ -41,6 +57,9 @@ pipeline {
         }
 
         stage('Deploy to Tomcat') {
+            when {
+                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            }
             steps {
                 deploy adapters: [tomcat9(credentialsId: '91750011-363b-4a0f-85a5-740f2e550efd', path: '', url: 'http://localhost:9090/')], contextPath: '/LeetCode-1.0-SNAPSHOT', war: '*/*.war'
             }
