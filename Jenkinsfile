@@ -20,7 +20,7 @@ pipeline {
             steps {
                 // Build your application. Replace this with your actual build commands.
                 sh 'mvn clean package' // Assuming a Maven-based Java project.
-                sh 'mvn clean test jacoco:report'  // Use appropriate Maven goals or build commands
+                sh 'mvn test jacoco:report'  // Use appropriate Maven goals or build commands
                 jacoco(execPattern: 'target/jacoco.exec')
             }
         }
