@@ -19,14 +19,15 @@ pipeline {
         stage('Build') {
             steps {
                 // Build your application. Replace this with your actual build commands.
-                sh 'mvn clean package' // Assuming a Maven-based Java project.
-                sh 'mvn test jacoco:report'  // Use appropriate Maven goals or build commands
-                jacoco(execPattern: 'target/jacoco.exec')
+                sh 'mvn clean install' // Assuming a Maven-based Java project.
+
             }
         }
 
         stage('Test') {
             steps {
+                sh 'mvn test'  // Use appropriate Maven goals or build commands
+                jacoco(execPattern: 'target/jacoco.exec')
                 echo 'Testing'
             }
         }
