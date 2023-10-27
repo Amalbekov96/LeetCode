@@ -8,10 +8,6 @@ pipeline {
 
     environment {
     PATH = "$PATH:/usr/local/Cellar/maven/3.9.5/libexec/bin"
-//         // Define the SonarQube server configuration
-//         SONARQUBE_HOME = tool name: 'SonarQubeScanner', type: 'hudson.plugins.sonar.SonarRunnerInstallation'
-//         SONARQUBE_SERVER_URL = 'http://localhost:9000' // Replace with your SonarQube server URL
-//         SONARQUBE_TOKEN = credentials('sqa_f9d0750bc8a3340b1717acaaca950ba9ef4ba755') // Use the SonarQube authentication token from Jenkins credentials
     }
 
     
@@ -34,7 +30,7 @@ pipeline {
 
         stage("Quality Gate") {
             steps {
-                timeout(time: 5, unit: 'MINUTES') {
+                timeout(time: 1, unit: 'HOURS') {
                     script {
                         def qualityGateStatus = waitForQualityGate()
 
