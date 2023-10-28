@@ -38,17 +38,9 @@ pipeline {
         stage("Quality Gate") {
             steps {
                 timeout(time: 1, unit: 'HOURS') {
-                    script {
-                        // Ensure the 'withSonarQubeEnv' wrapper is used for SonarQube analysis
-                        withSonarQubeEnv('sonarqube-10.2.1') {
-                            def qualityGateStatus = waitForQualityGate()
-
-                            if (qualityGateStatus != 'OK') {
-                                error "Quality Gate failed: ${qualityGateStatus}"
-                            } else {
-                                echo 'Quality Gate passed'
-                            }
-                        }
+                    def qg = waitForQualityGate()
+                    if (qg.status != 'OK') {
+                      error "Pipeline aborted due to quality gate failure: ${qg.status}"
                     }
                 }
             }
