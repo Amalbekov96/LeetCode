@@ -27,14 +27,6 @@ pipeline {
             }
         }
 
-        stage('Run SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('sonarqube-10.2.1') {
-                    sh 'mvn sonar:sonar'
-                }
-            }
-        }
-
         stage("Quality Gate") {
             steps {
                 timeout(time: 30, unit: 'MINUTES') {
@@ -50,6 +42,14 @@ pipeline {
                             }
                         }
                     }
+                }
+            }
+        }
+
+        stage('Run SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube-10.2.1') {
+                    sh 'mvn sonar:sonar'
                 }
             }
         }
