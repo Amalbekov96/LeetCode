@@ -37,7 +37,7 @@ pipeline {
 
         stage("Quality Gate") {
             steps {
-                timeout(time: 30, unit: 'MINUTES') {
+                timeout(time: 1, unit: 'HOURS') {
                     script {
                         // Ensure the 'withSonarQubeEnv' wrapper is used for SonarQube analysis
                         withSonarQubeEnv('sonarqube-10.2.1') {
